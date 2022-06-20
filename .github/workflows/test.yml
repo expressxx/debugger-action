@@ -8,6 +8,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      
+      - name: checkout source code
+        run: |
+          sudo apt install build-essential libncurses5-dev gawk git libssl-dev gettext zlib1g-dev swig unzip time rsync python3 python3-setuptools python3-yaml
+          cd ~/work*
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git clone https://github.com/gl-inet/gl-infra-builder.git
+          cd gl-infra-builder
+          python3 setup.py -c config-wlan-ap.yml
+      
       - name: Setup Debug Session
         uses: csexton/debugger-action@master
         
