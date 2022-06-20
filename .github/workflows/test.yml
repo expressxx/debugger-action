@@ -12,12 +12,15 @@ jobs:
       - name: checkout source code
         run: |
           sudo apt install build-essential libncurses5-dev gawk git libssl-dev gettext zlib1g-dev swig unzip time rsync python3 python3-setuptools python3-yaml
+          touch /tmp/keepalive
           cd ~/work*
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
           git clone https://github.com/gl-inet/gl-infra-builder.git
           cd gl-infra-builder
           python3 setup.py -c config-wlan-ap.yml
+          cd wlan-ap/openwrt
+          ./scripts/gen_config.py target_wlan_ap-gl-ax1800 luci
       
       - name: Setup Debug Session
         uses: csexton/debugger-action@master
